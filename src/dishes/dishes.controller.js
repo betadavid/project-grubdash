@@ -67,7 +67,7 @@ function create(req, res, next){
 function idBodyMatchesIdRoute(req, res, next){
     const bodyId = req.body.data.id;
     const routeId = req.params.dishId;
-    if(bodyId === routeId){
+    if(bodyId === routeId || !bodyId){
         next();
     }else{
         next({
@@ -100,12 +100,12 @@ module.exports = {
         create
     ],
     update: [
+        dishExists,
         bodyDataHas("name"),
         bodyDataHas("description"),
         bodyDataHas("price"),
         priceIsCorrect,
         bodyDataHas("image_url"),
-        dishExists,
         idBodyMatchesIdRoute,
         update
     ]
